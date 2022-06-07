@@ -4,17 +4,25 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
         
-        for(int i=0;i<n;i++)
+        int row=0,col=m-1;
+        
+        while(row<n && col>=0)
         {
-            for(int j=0;j<m;j++)
+            if(matrix[row][col]==target)
             {
-                if(matrix[i][j]==target)
-                {
-                    return true;
-                }
+                return true;
+            }
+            else if(matrix[row][col]>target)
+            {
+                col--;
+            }
+            else
+            {
+                row++;
             }
         }
         
         return false;
+        
     }
 };
