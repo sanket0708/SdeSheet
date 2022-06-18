@@ -2,35 +2,40 @@ class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         
-        vector<int>temp;
-        
-        for(int i=0;i<nums1.size();i++)
+        int n1 = nums1.size();
+        int n2 = nums2.size();
+   
+        if(n1 > n2) return findMedianSortedArrays(nums2, nums1);
+        int low = 0;
+        int high = n1;
+        while(low <= high)
         {
-            temp.push_back(nums1[i]);
-            
+            int mid1 = (low + high) / 2;
+         
+            int mid2 = (n1 + n2 + 1) / 2 - mid1;
+          
+            int l1 = (mid1 - 1 < 0) ? INT_MIN : nums1[mid1 - 1];
+            int l2 = (mid2 - 1 < 0) ? INT_MIN : nums2[mid2 - 1];
+            int r1 = (mid1 == n1) ? INT_MAX : nums1[mid1];
+            int r2 = (mid2 == n2) ? INT_MAX : nums2[mid2];
+   
+            if(l1 <= r2 && l2 <= r1)
+            {
+          
+                if((n1 + n2) % 2 == 0) return (max(l1, l2) + min(r1, r2)) / 2.0;
+          
+                else return max(l1, l2);  
+            }
+            if(l1 > r2)
+            {
+                high = mid1 - 1;
+            }
+            if(l2 > r1)
+            {
+                low = mid1 + 1;
+            }
         }
-        
-         for(int i=0;i<nums2.size();i++)
-        {
-            temp.push_back(nums2[i]);
-            
-        }
-        
-        sort(temp.begin(),temp.end());
-        
-        int n = temp.size();
-        
-        if(n%2!=0)
-        {
-            return temp[n/2];
-        }
-        else
-        {
-            double xyz = temp[n/2] + temp[(n/2)-1];
-            
-            return xyz/2;
-            
-        }
+        return 0.0;
         
     }
 };
