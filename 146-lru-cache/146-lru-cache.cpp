@@ -52,10 +52,7 @@ public:
         }
 
     }
-    /*
-    Logic for get function:
-    -> if key not found return -1
-    ->if found then return val
+    /*->if found then return val
     */
     int get(int key) {
         if (m.find(key)==m.end())
@@ -67,13 +64,8 @@ public:
         
         return x->value;
     }
-    /*Logic for Put function:
-    ->if key already present thenchange the value of the key insert it at last
-    ->if key not present
-        Case1:if size== capacity then first value removed in LRU Cache
-        Case2:if size!=capacity value inserted at last  
-    */
-    void put(int key, int value) {
+  
+  void put(int key, int value) {
         Node *y=new Node(key,value);
         if(m.find(key)!=m.end()){
             m[key]->value=value;
@@ -82,7 +74,7 @@ public:
         }else{
             m[key]=y;
             if(size==capacity){
-                m.erase(head->key);//remove the least recently used value from map
+                m.erase(head->key);
                 delete_node(head);
                 insert(y);
             }else{
