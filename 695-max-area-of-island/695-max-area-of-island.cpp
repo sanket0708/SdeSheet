@@ -11,10 +11,11 @@ public:
         
         grid[row][col] = 0;
         
-        return (1+dfs(grid,row+1,col)+dfs(grid,row-1,col)+dfs(grid,row,col+1)+dfs(grid,row,col-1));
+        int ans ;
         
+        ans =  (1+dfs(grid,row+1,col)+dfs(grid,row-1,col)+dfs(grid,row,col+1)+dfs(grid,row,col-1));
         
-        
+        return ans;
         
     }
     int maxAreaOfIsland(vector<vector<int>>& grid) {
