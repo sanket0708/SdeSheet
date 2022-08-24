@@ -1,28 +1,34 @@
 class Solution {
 public:
-    
-    vector<vector<int>>res;
-    
-    void f(vector<int>&nums,int i,int n)
+    void helper( vector<vector<int>>&ans, vector<int>&ds,vector<int>& nums,int freq[])
     {
-        if(i==n)
+        if(ds.size()==nums.size())
         {
-            res.push_back(nums);
+            ans.push_back(ds);
             return;
         }
         
-        for(int j=i;j<=n;j++)
+        for(int i=0;i<nums.size();i++)
         {
-            swap(nums[i],nums[j]);
-            f(nums,i+1,n);
-            swap(nums[i],nums[j]);
+            if(!freq[i])
+            {
+                ds.push_back(nums[i]);
+                freq[i] = 1;
+                helper(ans,ds,nums,freq);
+                freq[i] = 0;
+                ds.pop_back();
+            }
         }
+        
+        
     }
-    
     vector<vector<int>> permute(vector<int>& nums) {
         
-        f(nums,0,nums.size()-1);
-        return res;
-        
+        vector<vector<int>>ans;
+        vector<int>ds;
+        int freq[nums.size()];
+        for(int i=0;i<nums.size();i++) freq[i] = 0;
+        helper(ans,ds,nums,freq);
+        return ans;
     }
 };
