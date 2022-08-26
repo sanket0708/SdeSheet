@@ -1,45 +1,40 @@
 class Solution {
 public:
     
-      int f(int i,int j,int n,int m,vector<vector<int>>& a,vector<vector<int>>&dp)
+    int f(int i,int j,vector<vector<int>>& matrix, vector<vector<int>>&dp)
     {
-        if(j<0 || j>m-1)
-            return 1e9;
-        
+        int n = matrix.size();
+        if(j<0 || j>=n) return 1e9;
+       
         if(i==0)
-            return a[i][j];
+        {
+            return matrix[i][j];
+        }
         
-        if(dp[i][j]!=-1)
-            return dp[i][j];
+      
+        if(dp[i][j]!=-1) return dp[i][j];
+        //3 directions
         
-        int up = a[i][j] + f(i-1,j,n,m,a,dp);
+        int up = matrix[i][j] + f(i-1,j,matrix,dp);
+        int leftup = matrix[i][j] + f(i-1,j-1,matrix,dp);
+        int rightup = matrix[i][j] + f(i-1,j+1,matrix,dp);
         
-        int ld = a[i][j] + f(i-1,j-1,n,m,a,dp);
-        
-        int rd = a[i][j] + f(i-1,j+1,n,m,a,dp);
-        
-        
-        return dp[i][j]=min(up,min(ld,rd));
+        return dp[i][j] = min(up,min(leftup,rightup));
         
     }
     
-
-    
     int minFallingPathSum(vector<vector<int>>& matrix) {
         
-        int ans=INT_MAX;
+        int n = matrix.size();
+        vector<vector<int>>dp(n,vector<int>(n,-1));
         
-        int n=matrix.size();
+        int mini = INT_MAX;
         
-        int m=matrix[0].size();
-        
-        vector<vector<int>>dp(n,vector<int>(m,-1));
-        
-        for(int j=0;j<m;j++)
+        for(int j=0;j<n;j++)
         {
-            ans=min(ans,f(n-1,j,n,m,matrix,dp));
+            mini = min(mini,f(n-1,j,matrix,dp));
         }
         
-        return ans;
+        return mini;
     }
 };
