@@ -1,19 +1,17 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
-          int ls=0;
+        
+        map<int,int>mp;
+        mp[0] = 1;
         int count = 0;
-        int len = nums.size();
+        int ls = 0;
         
-        map<int,int>m;
-        
-        m[0] = 1;
-        
-        for(int i=0;i<len;i++)
+        for(int i=0;i<nums.size();i++)
         {
-            ls+= nums[i];
-            count+= m[ls-k];
-            m[ls]++;
+            ls += nums[i];
+            count += mp[ls-k];
+            mp[ls]++;
         }
         
         return count;
