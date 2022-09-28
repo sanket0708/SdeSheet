@@ -10,27 +10,49 @@
  */
 class Solution {
 public:
+     ListNode* merge(ListNode* l1, ListNode* l2)
+     {
+         ListNode*cur = new ListNode(0);
+         ListNode*temp = cur;
+         while(l1 && l2)
+         {
+              if(l1->val < l2->val) {
+                cur->next = l1;
+                l1 = l1->next;
+            }
+            else {
+                cur->next = l2;
+                l2 = l2->next;
+            }
+            cur = cur->next;
+         }
+         
+          if(l1) {
+			cur->next = l1;
+		}
+        if(l2) {
+			cur->next = l2;
+		}
+        return temp->next;
+         
+     }
     ListNode* sortList(ListNode* head) {
         
-        ListNode*dummy = new ListNode();
-        ListNode*temp = dummy;
+        if(head==NULL || head->next==NULL) return head;
+        ListNode*slow = head;
+        ListNode*fast = head->next;
         
-        vector<int>ans;
-        while(head!=NULL)
+        while(fast!=NULL && fast->next!=NULL)
         {
-            ans.push_back(head->val);
-            head = head->next;
+            slow = slow->next;
+            fast = fast->next->next;
         }
         
-        sort(ans.begin(),ans.end());
+        fast = slow->next;
+        slow->next = NULL;
         
-        for(int i=0;i<ans.size();i++)
-        {
-            ListNode* temp2 = new ListNode(ans[i]);
-            temp->next = temp2;
-            temp = temp->next;
-        }
+        return merge(sortList(head),sortList(fast));
         
-        return dummy->next;
+        
     }
 };
