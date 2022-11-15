@@ -92,17 +92,17 @@ struct Node
 void addNode(Node *head, int pos, int data)
 {
    // Your code here
-   Node * temp = new Node(data);
+   Node*temp = new Node(data);
    Node*curr = head;
    
    for(int i=0;i<pos;i++)
    {
        curr = curr->next;
    }
-   
-   Node*helper = curr->next;
+    
+   Node* forward = curr->next;
    curr->next = temp;
    temp->prev = curr;
-   temp->next = helper;
+   temp->next = forward;
    
 }
